@@ -6,8 +6,10 @@
 
 package discotheque;
 
-import java.sql.*;
 
+import java.sql.*;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  *
@@ -21,7 +23,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
     public JFrameArtistes(ConnectionOracle conn) {
         initComponents();
         this.connBD = conn;
-        BTN_Premier.doClick();
+        listerTBX();
     }
 
     /**
@@ -53,6 +55,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BTN_Rechercher = new javax.swing.JButton();
         TBX_Nom = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         BTN_Vider.setText("Vider les zones");
         BTN_Vider.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +153,8 @@ public class JFrameArtistes extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("(vide affiche tout)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,7 +195,9 @@ public class JFrameArtistes extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(BTN_Rechercher)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7))
                             .addComponent(BTN_Lister)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,7 +245,8 @@ public class JFrameArtistes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTN_Rechercher)
-                    .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -253,31 +261,43 @@ public class JFrameArtistes extends javax.swing.JFrame {
     private void BTN_DernierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DernierActionPerformed
         // TODO add your handling code here:
 
-        try
-        {
+        try {
             if(rst.last())
             {
                 remplir();
             }
-
         }
-
         catch(SQLException se){
-       //     ??????
-       //     JOptionPane.showMessageDialog(this, "dernier imposible");
-
+            JOptionPane.showMessageDialog(this, "dernier imposible");
         }
     }//GEN-LAST:event_BTN_DernierActionPerformed
 
     private void BTN_SupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SupprimerActionPerformed
-        // TODO add your handling code here:
+        try{
+            CallableStatement cstmS = connBD.getConnection().prepareCall("{call GestionArtiste.supprimer(?)}");
+            cstmS.setInt(1, Integer.parseInt(LB_Num.getText()));
+            cstmS.executeUpdate();
+            listerTBX();
+        }catch(SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
+        
     }//GEN-LAST:event_BTN_SupprimerActionPerformed
 
-    private void BTN_PremierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PremierActionPerformed
-        try
-        {
+    private void listerTBX(){
+        try{
             Statement stm1 = connBD.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rst = stm1.executeQuery(sqlListe);
+            if (rst.first())
+            {
+                remplir();
+            }
+        }catch (SQLException sqe){System.out.println(sqe);}
+    }
+            
+    private void BTN_PremierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PremierActionPerformed
+        try
+        {            
             if (rst.first())
             {
                 remplir();
@@ -322,56 +342,55 @@ public class JFrameArtistes extends javax.swing.JFrame {
     }//GEN-LAST:event_BTN_ListerActionPerformed
 
     private void BTN_PrecedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PrecedentActionPerformed
-/*
+
         try
         {
             if(rst.previous())
             {
-                NumEmploye.setText (((Integer)rst.getInt("numemp")).toString());
-                NomEmploye.setText(rst.getString("nom"));
-                PrenomEmploye.setText(rst.getString("prenom"));
-                Salaire.setText (((Integer)rst.getInt("salaire")).toString());
+                remplir();
             }
             else
             {
                 JOptionPane.showMessageDialog(this, "Précedent impossible");
             }
-
         }
-
         catch(SQLException se)
         {
             JOptionPane.showMessageDialog(this, "précedent impossible");
-        }// TODO add your handling code here:*/
+        }
     }//GEN-LAST:event_BTN_PrecedentActionPerformed
 
     private void BTN_SuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SuivantActionPerformed
-        // TODO add your handling code here:
-  /*      try
+        
+        try
         {
             if(rst.next())
             {
-                NumEmploye.setText (((Integer)rst.getInt("numemp")).toString());
-                NomEmploye.setText(rst.getString("nom"));
-                PrenomEmploye.setText(rst.getString("prenom"));
-                Salaire.setText (((Integer)rst.getInt("salaire")).toString());
+                remplir();
             }
-
             else
             {
                 JOptionPane.showMessageDialog(this, "suivant impossible");
             }
         }
-
         catch(SQLException se)
         {
             JOptionPane.showMessageDialog(this, "Suivant imposible");
-
-        }*/
+        }
     }//GEN-LAST:event_BTN_SuivantActionPerformed
 
     private void BTN_RechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_RechercherActionPerformed
-        // TODO add your handling code here:
+        try{
+            PreparedStatement stm2 = connBD.getConnection().prepareStatement(sqlRecherche, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);            
+            stm2.setString(1, TBX_Recherche.getText()+"%");
+            rst = stm2.executeQuery();
+            if (rst.first())
+            {
+                remplir();
+            }
+        }catch (SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
     }//GEN-LAST:event_BTN_RechercherActionPerformed
 
     
@@ -430,6 +449,8 @@ public class JFrameArtistes extends javax.swing.JFrame {
    ConnectionOracle connBD;
    ResultSet rst ;
    String sqlListe ="select * from artistes";
+ //  String sqlRecherche = "select * from artistes where nom like '?%'" ; //affiche caractere non valide
+   String sqlRecherche = "select * from artistes where nom like ? " ;// affiche index de colonne non valide
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_Ajout;
     private javax.swing.JButton BTN_Dernier;
@@ -451,5 +472,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }

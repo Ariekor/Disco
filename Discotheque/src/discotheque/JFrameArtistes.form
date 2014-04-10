@@ -66,6 +66,8 @@
                               <Component id="BTN_Rechercher" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="TBX_Recherche" min="-2" pref="138" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="BTN_Lister" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
@@ -126,6 +128,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="BTN_Rechercher" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="TBX_Recherche" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -288,6 +291,11 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="TBX_Nom">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="(vide affiche tout)"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
