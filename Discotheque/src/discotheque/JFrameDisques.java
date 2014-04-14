@@ -6,6 +6,10 @@
 
 package discotheque;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Simon
@@ -15,8 +19,69 @@ public class JFrameDisques extends javax.swing.JFrame {
     /**
      * Creates new form JFrameDisques
      */
-    public JFrameDisques() {
+    
+    public JFrameDisques(ConnectionOracle conn) {
         initComponents();
+        this.connBD = conn;
+        ListComboBox();
+        ListChamps();
+    }
+    
+    private void ListChamps()
+    {
+        try{
+            Statement stm1 = connBD.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rst = stm1.executeQuery(sqlListe);
+            if (rst.first())
+            {
+                Remplir();
+            }
+        }catch (SQLException sqe){System.out.println(sqe);}
+    }
+    
+    private void Remplir ()
+    {
+        try
+        {
+            LB_Numero.setText(((Integer)rst.getInt("NUMDISQUE")).toString());
+            TB_Titre.setText(rst.getString("TITRE"));
+            TB_Prix.setText(((Double)rst.getDouble("PRIX")).toString());
+            TB_Annee.setText(((Integer)rst.getInt("ANNEE")).toString());
+            TB_Langue.setText(rst.getString("LANGUE"));
+            SP_NbChanson.setValue(((Integer)rst.getInt("NBRCHANSON")));
+            TakeItemCBX(CBX_Genre, rst.getString("GENRE"));
+        }
+        catch(SQLException e ) {System.out.println(e);}
+    }
+    
+    private void TakeItemCBX(javax.swing.JComboBox C , String NomItem)
+    {
+        for(int i = 0; i < C.getItemCount(); i++)
+        {
+            if (NomItem.equals(C.getItemAt(i).toString()) )
+            {
+                C.setSelectedIndex(i);
+            }
+        }
+    }
+    
+    private void ListComboBox()
+    {
+        int i = 0;
+        try
+        {
+            Statement stm1 = connBD.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rst = stm1.executeQuery(sqlComboBox);
+            CBX_Genre.removeAllItems();
+            CBX_Genre1.removeAllItems();
+            while ( rst.next())
+            {
+                CBX_Genre.addItem(rst.getString("genre"));
+                CBX_Genre1.addItem(rst.getString("genre"));
+                i ++;
+            }
+        }
+        catch(SQLException e) {}
     }
 
     /**
@@ -28,19 +93,229 @@ public class JFrameDisques extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        TB_Titre = new javax.swing.JTextField();
+        TB_Prix = new javax.swing.JTextField();
+        TB_Annee = new javax.swing.JTextField();
+        TB_Langue = new javax.swing.JTextField();
+        LB_Numero = new javax.swing.JLabel();
+        SP_NbChanson = new javax.swing.JSpinner();
+        CBX_Genre = new javax.swing.JComboBox();
+        BTN_Ajout = new javax.swing.JButton();
+        BTN_Delete = new javax.swing.JButton();
+        BTN_Mod = new javax.swing.JButton();
+        BTN_Vider = new javax.swing.JButton();
+        BTN_First = new javax.swing.JButton();
+        BTN_Back = new javax.swing.JButton();
+        BTN_Next = new javax.swing.JButton();
+        BTN_Last = new javax.swing.JButton();
+        BTN_RechercheTitre = new javax.swing.JButton();
+        TB_RechercheTitre = new javax.swing.JTextField();
+        BTN_RechercheGenre = new javax.swing.JButton();
+        CBX_Genre1 = new javax.swing.JComboBox();
+
+        setTitle("Disques");
+
+        jLabel1.setText("Numero");
+
+        jLabel2.setText("Titre");
+
+        jLabel3.setText("Prix");
+
+        jLabel4.setText("Année");
+
+        jLabel5.setText("Langue");
+
+        jLabel6.setText("Nombre de chanson");
+
+        jLabel7.setText("Genre");
+
+        TB_Titre.setName("TB_Titre"); // NOI18N
+
+        TB_Prix.setName("TB_Prix"); // NOI18N
+
+        TB_Annee.setName("TB_Annee"); // NOI18N
+
+        TB_Langue.setName("TB_Langue"); // NOI18N
+
+        LB_Numero.setText("#");
+        LB_Numero.setName("LB_NumDisque"); // NOI18N
+
+        SP_NbChanson.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                SP_NbChansonStateChanged(evt);
+            }
+        });
+
+        CBX_Genre.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        BTN_Ajout.setText("Ajouter");
+
+        BTN_Delete.setText("Supprimer");
+
+        BTN_Mod.setText("Modifier");
+
+        BTN_Vider.setText("Vider les champs");
+        BTN_Vider.setActionCommand("Vider");
+
+        BTN_First.setText("Premier");
+        BTN_First.setName("First"); // NOI18N
+
+        BTN_Back.setText("Précédent");
+        BTN_Back.setName("Back"); // NOI18N
+
+        BTN_Next.setText("Suivant");
+        BTN_Next.setName("Next"); // NOI18N
+
+        BTN_Last.setText("Dernier");
+        BTN_Last.setName("Last"); // NOI18N
+
+        BTN_RechercheTitre.setText("Recherche");
+
+        BTN_RechercheGenre.setText("Chercher par genre");
+
+        CBX_Genre1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(BTN_RechercheTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(TB_RechercheTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(62, 62, 62))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SP_NbChanson, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(122, 122, 122))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LB_Numero)
+                                    .addComponent(TB_Titre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TB_Prix, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TB_Annee, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TB_Langue, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(CBX_Genre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(42, 42, 42)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BTN_Vider, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(BTN_Ajout, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BTN_Mod, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BTN_Delete, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(BTN_Last))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(BTN_RechercheGenre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(BTN_First)
+                                .addGap(18, 18, 18)
+                                .addComponent(BTN_Back)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(BTN_Next))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(CBX_Genre1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BTN_Ajout)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BTN_Delete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BTN_Mod)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BTN_Vider))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(LB_Numero))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TB_Titre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TB_Prix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TB_Annee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(TB_Langue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(SP_NbChanson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(CBX_Genre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTN_First)
+                    .addComponent(BTN_Back)
+                    .addComponent(BTN_Next)
+                    .addComponent(BTN_Last))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTN_RechercheGenre)
+                    .addComponent(CBX_Genre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTN_RechercheTitre)
+                    .addComponent(TB_RechercheTitre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SP_NbChansonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SP_NbChansonStateChanged
+        if (Integer.parseInt(SP_NbChanson.getValue().toString()) < 0 )
+        {
+            SP_NbChanson.setValue(0);
+        }
+        else if ( Integer.parseInt(SP_NbChanson.getValue().toString()) > 99)
+        {
+            SP_NbChanson.setValue(99);
+        }
+    }//GEN-LAST:event_SP_NbChansonStateChanged
 
     /**
      * @param args the command line arguments
@@ -72,11 +347,40 @@ public class JFrameDisques extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameDisques().setVisible(true);
+               // new JFrameDisques().setVisible(true);
             }
         });
     }
-
+ConnectionOracle connBD;
+ResultSet rst ;
+String sqlComboBox = "Select * From Genres";
+String sqlListe = " Select * From Disques";
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_Ajout;
+    private javax.swing.JButton BTN_Back;
+    private javax.swing.JButton BTN_Delete;
+    private javax.swing.JButton BTN_First;
+    private javax.swing.JButton BTN_Last;
+    private javax.swing.JButton BTN_Mod;
+    private javax.swing.JButton BTN_Next;
+    private javax.swing.JButton BTN_RechercheGenre;
+    private javax.swing.JButton BTN_RechercheTitre;
+    private javax.swing.JButton BTN_Vider;
+    private javax.swing.JComboBox CBX_Genre;
+    private javax.swing.JComboBox CBX_Genre1;
+    private javax.swing.JLabel LB_Numero;
+    private javax.swing.JSpinner SP_NbChanson;
+    private javax.swing.JTextField TB_Annee;
+    private javax.swing.JTextField TB_Langue;
+    private javax.swing.JTextField TB_Prix;
+    private javax.swing.JTextField TB_RechercheTitre;
+    private javax.swing.JTextField TB_Titre;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }
