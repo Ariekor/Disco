@@ -130,9 +130,10 @@ public class Identifier extends javax.swing.JFrame {
         connBD.setConnection(n,m);
         connBD.connecter();
         // appel de la classe JFrameGestion (en utilisant un objet ConnectionOracle
-            JFrameArtistes fenetre = new JFrameArtistes(connBD);
-            fenetre.setVisible(true);
-
+            JFrameArtistes fenetreArtiste = new JFrameArtistes(connBD);
+            fenetreArtiste.setVisible(true);
+            JFrameDisques fenetreDisque = new JFrameDisques(connBD);
+            fenetreDisque.setVisible(true);
     }//GEN-LAST:event_BTN_ConnecterActionPerformed
 
     /**
