@@ -215,9 +215,12 @@ pip-log.txt
 .mr.developer.cfg
 
 
+
 ########isa#####
 ##############
 ## Net beans
 ################
 
 private.properties
+private.xml
+>>>>>>> 2868f1e154def86401ec1bec1e14cd88566fc84d
