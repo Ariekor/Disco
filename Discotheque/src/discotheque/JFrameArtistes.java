@@ -6,6 +6,11 @@
 
 package discotheque;
 
+
+import java.sql.*;
+import java.awt.*;
+import javax.swing.*;
+
 /**
  *
  * @author Simon
@@ -15,8 +20,10 @@ public class JFrameArtistes extends javax.swing.JFrame {
     /**
      * Creates new form JFrameArtistes
      */
-    public JFrameArtistes() {
+    public JFrameArtistes(ConnectionOracle conn) {
         initComponents();
+        this.connBD = conn;
+        listerTBX();
     }
 
     /**
@@ -28,22 +35,381 @@ public class JFrameArtistes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        BTN_Vider = new javax.swing.JButton();
+        BTN_Dernier = new javax.swing.JButton();
+        BTN_Supprimer = new javax.swing.JButton();
+        BTN_Premier = new javax.swing.JButton();
+        BTN_Ajout = new javax.swing.JButton();
+        BTN_Modif = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        TBX_Nation = new javax.swing.JTextField();
+        BTN_Lister = new javax.swing.JButton();
+        BTN_Precedent = new javax.swing.JButton();
+        TBX_Prenom = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        TBX_Recherche = new javax.swing.JTextField();
+        BTN_Suivant = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        LB_Num = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        BTN_Rechercher = new javax.swing.JButton();
+        TBX_Nom = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+
+        BTN_Vider.setText("Vider les zones");
+        BTN_Vider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ViderActionPerformed(evt);
+            }
+        });
+
+        BTN_Dernier.setText("Dernier");
+        BTN_Dernier.setMaximumSize(new java.awt.Dimension(81, 23));
+        BTN_Dernier.setMinimumSize(new java.awt.Dimension(81, 23));
+        BTN_Dernier.setPreferredSize(new java.awt.Dimension(81, 23));
+        BTN_Dernier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_DernierActionPerformed(evt);
+            }
+        });
+
+        BTN_Supprimer.setText("Supprimer");
+        BTN_Supprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_SupprimerActionPerformed(evt);
+            }
+        });
+
+        BTN_Premier.setText("Premier");
+        BTN_Premier.setMaximumSize(new java.awt.Dimension(81, 23));
+        BTN_Premier.setMinimumSize(new java.awt.Dimension(81, 23));
+        BTN_Premier.setPreferredSize(new java.awt.Dimension(81, 23));
+        BTN_Premier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_PremierActionPerformed(evt);
+            }
+        });
+
+        BTN_Ajout.setText("Ajouter");
+        BTN_Ajout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_AjoutActionPerformed(evt);
+            }
+        });
+
+        BTN_Modif.setText("Modifier");
+        BTN_Modif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ModifActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Nationalité");
+
+        BTN_Lister.setText("Afficher tous les enregistrements");
+        BTN_Lister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ListerActionPerformed(evt);
+            }
+        });
+
+        BTN_Precedent.setText("Précédent");
+        BTN_Precedent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_PrecedentActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Prénom");
+
+        BTN_Suivant.setText("Suivant");
+        BTN_Suivant.setMaximumSize(new java.awt.Dimension(81, 23));
+        BTN_Suivant.setMinimumSize(new java.awt.Dimension(81, 23));
+        BTN_Suivant.setPreferredSize(new java.awt.Dimension(81, 23));
+        BTN_Suivant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_SuivantActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Nom");
+
+        LB_Num.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LB_Num.setText("1");
+        LB_Num.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel2.setText("#Artiste");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Artistes");
+
+        BTN_Rechercher.setText("Recherche par nom");
+        BTN_Rechercher.setToolTipText("");
+        BTN_Rechercher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_RechercherActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("(vide affiche tout)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(152, 152, 152))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TBX_Nation, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LB_Num, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TBX_Prenom, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TBX_Nom, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(BTN_Supprimer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BTN_Modif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BTN_Ajout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(BTN_Vider))
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BTN_Rechercher)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7))
+                            .addComponent(BTN_Lister)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(BTN_Precedent)
+                                .addGap(2, 2, 2)
+                                .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(LB_Num, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_Ajout))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(BTN_Modif)
+                    .addComponent(TBX_Nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TBX_Prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(BTN_Supprimer))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(TBX_Nation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_Vider))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTN_Precedent)
+                    .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(BTN_Lister)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTN_Rechercher)
+                    .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void BTN_ViderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ViderActionPerformed
+        vider();      // TODO add your handling code here:
+    }//GEN-LAST:event_BTN_ViderActionPerformed
+
+    private void BTN_DernierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DernierActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            if(rst.last())
+            {
+                remplir();
+            }
+        }
+        catch(SQLException se){
+            JOptionPane.showMessageDialog(this, "dernier imposible");
+        }
+    }//GEN-LAST:event_BTN_DernierActionPerformed
+
+    private void BTN_SupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SupprimerActionPerformed
+        try{
+            CallableStatement cstmS = connBD.getConnection().prepareCall("{call GestionArtiste.supprimer(?)}");
+            cstmS.setInt(1, Integer.parseInt(LB_Num.getText()));
+            cstmS.executeUpdate();
+            listerTBX();
+        }catch(SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
+        
+    }//GEN-LAST:event_BTN_SupprimerActionPerformed
+
+    private void listerTBX(){
+        try{
+            Statement stm1 = connBD.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rst = stm1.executeQuery(sqlListe);
+            if (rst.first())
+            {
+                remplir();
+            }
+        }catch (SQLException sqe){System.out.println(sqe);}
+    }
+            
+    private void BTN_PremierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PremierActionPerformed
+        try
+        {            
+            if (rst.first())
+            {
+                remplir();
+            }
+        }
+        catch(SQLException se){ System.out.println(se);}
+        
+    }//GEN-LAST:event_BTN_PremierActionPerformed
+
+    private void BTN_AjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AjoutActionPerformed
+ /*       // TODO add your handling code here:
+        String sqlajout ="insert into employes (numemp,nom,prenom,salaire) values(?,?,?,?)";
+        int num= Integer.parseInt(NumEmploye.getText());
+        String nomp= NomEmploye.getText();
+        String prenomp = PrenomEmploye.getText();
+        Double salairep =Double.parseDouble(Salaire.getText());
+        vider();
+        // int Salairep =Integer.parseInt(Salaire.getText());
+
+        try
+        {
+            PreparedStatement stminsert=connBD.getConnection().prepareStatement(sqlajout);
+            stminsert.setInt(1, num);
+            stminsert.setString(2, nomp);
+            stminsert.setString(3, prenomp);
+            stminsert.setDouble(4, salairep);
+            stminsert.executeUpdate();
+        }
+
+        catch(SQLException se){System.out.println("errre" + se);}*/
+    }//GEN-LAST:event_BTN_AjoutActionPerformed
+
+    private void BTN_ModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ModifActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BTN_ModifActionPerformed
+
+    private void BTN_ListerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ListerActionPerformed
+ /*       JFrameListeEmp fenetre2 = new JFrameListeEmp(connBD);
+        fenetre2.setVisible(true);
+        fenetre2.lister();
+        // TODO add your handling code here:*/
+    }//GEN-LAST:event_BTN_ListerActionPerformed
+
+    private void BTN_PrecedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_PrecedentActionPerformed
+
+        try
+        {
+            if(rst.previous())
+            {
+                remplir();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Précedent impossible");
+            }
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(this, "précedent impossible");
+        }
+    }//GEN-LAST:event_BTN_PrecedentActionPerformed
+
+    private void BTN_SuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SuivantActionPerformed
+        
+        try
+        {
+            if(rst.next())
+            {
+                remplir();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "suivant impossible");
+            }
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(this, "Suivant imposible");
+        }
+    }//GEN-LAST:event_BTN_SuivantActionPerformed
+
+    private void BTN_RechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_RechercherActionPerformed
+        try{
+            PreparedStatement stm2 = connBD.getConnection().prepareStatement(sqlRecherche, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);            
+            stm2.setString(1, TBX_Recherche.getText()+"%");
+            rst = stm2.executeQuery();
+            if (rst.first())
+            {
+                remplir();
+            }
+        }catch (SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
+    }//GEN-LAST:event_BTN_RechercherActionPerformed
+
+    
+    private void remplir(){
+        try{
+            LB_Num.setText(((Integer)rst.getInt("numart")).toString());                
+            TBX_Nom.setText(rst.getString("nom"));
+            TBX_Prenom.setText(rst.getString("prenom"));
+            TBX_Nation.setText (rst.getString("nationalite"));
+        }
+        catch(SQLException se){ System.out.println(se);}
+    }
+    
+    private void vider(){
+         TBX_Nom.setText("");
+         TBX_Prenom.setText("");
+         TBX_Nation.setText("");
+         TBX_Recherche.setText("");
+     }
     /**
      * @param args the command line arguments
      */
@@ -74,11 +440,38 @@ public class JFrameArtistes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameArtistes().setVisible(true);
+             //   new JFrameArtistes().setVisible(true);
             }
         });
     }
 
+    // Declartion des autres variables.
+   ConnectionOracle connBD;
+   ResultSet rst ;
+   String sqlListe ="select * from artistes";
+ //  String sqlRecherche = "select * from artistes where nom like '?%'" ; //affiche caractere non valide
+   String sqlRecherche = "select * from artistes where nom like ? " ;// affiche index de colonne non valide
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_Ajout;
+    private javax.swing.JButton BTN_Dernier;
+    private javax.swing.JButton BTN_Lister;
+    private javax.swing.JButton BTN_Modif;
+    private javax.swing.JButton BTN_Precedent;
+    private javax.swing.JButton BTN_Premier;
+    private javax.swing.JButton BTN_Rechercher;
+    private javax.swing.JButton BTN_Suivant;
+    private javax.swing.JButton BTN_Supprimer;
+    private javax.swing.JButton BTN_Vider;
+    private javax.swing.JLabel LB_Num;
+    private javax.swing.JTextField TBX_Nation;
+    private javax.swing.JTextField TBX_Nom;
+    private javax.swing.JTextField TBX_Prenom;
+    private javax.swing.JTextField TBX_Recherche;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }

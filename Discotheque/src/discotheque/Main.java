@@ -12,4 +12,11 @@ package discotheque;
  */
 public class Main {
     
+     public static void main(String[] args) {
+      // cette classe appelle la fênetre d'identifition.
+      
+       Identifier fenetrePrincipale = new Identifier();
+        fenetrePrincipale.setVisible(true);
+      // TODO code application logic here
+   }
 }
