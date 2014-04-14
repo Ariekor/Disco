@@ -8,18 +8,79 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import java.util.Vector;
-
+import oracle.jdbc.driver.OracleConnection;
 
 public class JFrameListeArtiste extends javax.swing.JFrame {
 
     /**
      * Creates new form JFrameListeArtiste
      */
-    public JFrameListeArtiste(ConnectionOracle conn) {
+    public JFrameListeArtiste(ConnectionOracle conn, int numArt) {
         initComponents();
         this.connBD = conn;
+        this.numArtiste = numArt;
     }
 
+    
+    public void lister(){
+    
+        Vector vectDisques = new Vector();
+        Vector vectEntete = null;
+        JTable tabDisques = null;
+        try
+        {
+            PreparedStatement stm = connBD.getConnection().prepareStatement(sqlListe);
+            stm.setInt(1, numArtiste);
+            ResultSet rst = stm.executeQuery();
+            vectDisques = remplirVecteur(rst);
+            vectEntete = creerEntete();  
+            tabDisques = new JTable(vectDisques, vectEntete);
+            JSP_Artistes.setViewportView(tabDisques);
+            this. getContentPane().add(JSP_Artistes,BorderLayout.CENTER);
+            JSP_Artistes.validate();            
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(this, se);
+        }
+    }
+    
+    private Vector creerEntete()
+    {
+        Vector vectEntete = new Vector();
+        vectEntete.add("No Disque");
+        vectEntete.add("Titre");
+        vectEntete.add("Prix");
+        vectEntete.add("Année");
+        vectEntete.add("Lanque");
+        vectEntete.add("Nbre chansons");
+        vectEntete.add("Genre");
+        return vectEntete;        
+    }
+    private Vector remplirVecteur(ResultSet rst){
+        Vector v = new Vector();
+        Vector ligne = null;
+        try
+        {            
+            while (rst.next()){
+                ligne = new Vector();
+                ligne.add(rst.getInt(1));
+                ligne.add(rst.getString(2));
+                ligne.add(rst.getFloat(3));
+                ligne.add(rst.getInt(4));
+                ligne.add(rst.getString(5));
+                ligne.add(rst.getInt(6));
+                ligne.add(rst.getString(7));
+                v.add(ligne); 
+            }            
+        }
+        catch (SQLException se)
+        {
+            JOptionPane.showMessageDialog(this, se);
+        }
+        return v;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +92,7 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
 
         JSP_Artistes = new javax.swing.JScrollPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -39,7 +100,7 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(JSP_Artistes, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addComponent(JSP_Artistes, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -53,6 +114,7 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     /**
      * @param args the command line arguments
      */
@@ -83,13 +145,15 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
- 
+ //               new JFrameListeArtiste(connBD).setVisible(true);
             }
         });
     }
 
+    int numArtiste = 0;
     ConnectionOracle connBD;
-    String sqlListe = "select * from artistes order by nom, prenom";
+    String sqlListe = "select * from disques where numdisque in " +
+            "(select numdisque from \"Artiste/Disque\" where numart = ? )";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane JSP_Artistes;
     // End of variables declaration//GEN-END:variables
