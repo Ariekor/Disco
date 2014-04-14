@@ -8,7 +8,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import java.util.Vector;
-
+import oracle.jdbc.driver.OracleConnection;
 
 public class JFrameListeArtiste extends javax.swing.JFrame {
 
@@ -83,7 +83,7 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
- 
+ //               new JFrameListeArtiste(connBD).setVisible(true);
             }
         });
     }
