@@ -50,22 +50,15 @@
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="SP_NbChanson" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="LB_Numero" min="-2" max="-2" attributes="0"/>
-                                  <Component id="TB_Titre" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <Component id="TB_Prix" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <Component id="TB_Annee" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <Component id="TB_Langue" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <Component id="CBX_Genre" min="-2" pref="120" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="SP_NbChanson" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="LB_Numero" min="-2" max="-2" attributes="0"/>
+                          <Component id="TB_Titre" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="TB_Prix" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="TB_Annee" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="TB_Langue" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="CBX_Genre" min="-2" pref="120" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="BTN_Vider" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -139,9 +132,9 @@
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="TB_Langue" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -282,6 +275,9 @@
         <Property name="text" type="java.lang.String" value="Premier"/>
         <Property name="name" type="java.lang.String" value="First" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_FirstActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_Back">
       <Properties>
@@ -300,6 +296,9 @@
         <Property name="text" type="java.lang.String" value="Dernier"/>
         <Property name="name" type="java.lang.String" value="Last" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_LastActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_RechercheTitre">
       <Properties>

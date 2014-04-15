@@ -166,6 +166,11 @@ public class JFrameDisques extends javax.swing.JFrame {
 
         BTN_First.setText("Premier");
         BTN_First.setName("First"); // NOI18N
+        BTN_First.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_FirstActionPerformed(evt);
+            }
+        });
 
         BTN_Back.setText("Précédent");
         BTN_Back.setName("Back"); // NOI18N
@@ -175,6 +180,11 @@ public class JFrameDisques extends javax.swing.JFrame {
 
         BTN_Last.setText("Dernier");
         BTN_Last.setName("Last"); // NOI18N
+        BTN_Last.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_LastActionPerformed(evt);
+            }
+        });
 
         BTN_RechercheTitre.setText("Recherche");
 
@@ -208,18 +218,14 @@ public class JFrameDisques extends javax.swing.JFrame {
                                     .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(SP_NbChanson, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(122, 122, 122))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LB_Numero)
-                                    .addComponent(TB_Titre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TB_Prix, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TB_Annee, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TB_Langue, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(CBX_Genre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(42, 42, 42)))
+                            .addComponent(SP_NbChanson, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LB_Numero)
+                            .addComponent(TB_Titre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TB_Prix, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TB_Annee, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TB_Langue, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CBX_Genre, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(BTN_Vider, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -275,9 +281,9 @@ public class JFrameDisques extends javax.swing.JFrame {
                             .addComponent(TB_Annee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(TB_Langue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TB_Langue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -316,6 +322,28 @@ public class JFrameDisques extends javax.swing.JFrame {
             SP_NbChanson.setValue(99);
         }
     }//GEN-LAST:event_SP_NbChansonStateChanged
+
+    private void BTN_FirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_FirstActionPerformed
+        try
+        {            
+            if (rst.first())
+            {
+                Remplir();
+            }
+        }
+        catch(SQLException se){ System.out.println(se);}
+    }//GEN-LAST:event_BTN_FirstActionPerformed
+
+    private void BTN_LastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_LastActionPerformed
+        try
+        {            
+            if (rst.last())
+            {
+                Remplir();
+            }
+        }
+        catch(SQLException se){ System.out.println(se);}
+    }//GEN-LAST:event_BTN_LastActionPerformed
 
     /**
      * @param args the command line arguments
