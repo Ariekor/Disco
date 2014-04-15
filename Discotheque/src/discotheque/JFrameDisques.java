@@ -6,9 +6,12 @@
 
 package discotheque;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -156,13 +159,28 @@ public class JFrameDisques extends javax.swing.JFrame {
         CBX_Genre.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         BTN_Ajout.setText("Ajouter");
+        BTN_Ajout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_AjoutActionPerformed(evt);
+            }
+        });
 
         BTN_Delete.setText("Supprimer");
 
         BTN_Mod.setText("Modifier");
+        BTN_Mod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ModActionPerformed(evt);
+            }
+        });
 
         BTN_Vider.setText("Vider les champs");
         BTN_Vider.setActionCommand("Vider");
+        BTN_Vider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_ViderActionPerformed(evt);
+            }
+        });
 
         BTN_First.setText("Premier");
         BTN_First.setName("First"); // NOI18N
@@ -174,9 +192,19 @@ public class JFrameDisques extends javax.swing.JFrame {
 
         BTN_Back.setText("Précédent");
         BTN_Back.setName("Back"); // NOI18N
+        BTN_Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_BackActionPerformed(evt);
+            }
+        });
 
         BTN_Next.setText("Suivant");
         BTN_Next.setName("Next"); // NOI18N
+        BTN_Next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_NextActionPerformed(evt);
+            }
+        });
 
         BTN_Last.setText("Dernier");
         BTN_Last.setName("Last"); // NOI18N
@@ -187,8 +215,18 @@ public class JFrameDisques extends javax.swing.JFrame {
         });
 
         BTN_RechercheTitre.setText("Recherche");
+        BTN_RechercheTitre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_RechercheTitreActionPerformed(evt);
+            }
+        });
 
         BTN_RechercheGenre.setText("Chercher par genre");
+        BTN_RechercheGenre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_RechercheGenreActionPerformed(evt);
+            }
+        });
 
         CBX_Genre1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -345,6 +383,103 @@ public class JFrameDisques extends javax.swing.JFrame {
         catch(SQLException se){ System.out.println(se);}
     }//GEN-LAST:event_BTN_LastActionPerformed
 
+    private void BTN_NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_NextActionPerformed
+        try
+        {
+            if(rst.next())
+            {
+                Remplir();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "suivant impossible");
+            }
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(this, "Suivant imposible");
+        }
+    }//GEN-LAST:event_BTN_NextActionPerformed
+
+    private void BTN_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_BackActionPerformed
+        try
+        {
+            if(rst.previous())
+            {
+                Remplir();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "précédent impossible");
+            }
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(this, "précédent imposible");
+        }
+    }//GEN-LAST:event_BTN_BackActionPerformed
+
+    private void BTN_AjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AjoutActionPerformed
+        try{
+            CallableStatement cstmS = connBD.getConnection().prepareCall("{call GestionDisques.inserer(?,?,?,?,?,?)}");
+            cstmS.setString(1,TB_Titre.getText());
+            cstmS.setDouble(2, Double.parseDouble(TB_Prix.getText()));
+            cstmS.setInt(3, Integer.parseInt(TB_Annee.getText()));
+            cstmS.setString(4, TB_Langue.getText());
+            cstmS.setInt(5, (Integer)SP_NbChanson.getValue());
+            cstmS.setString(6, CBX_Genre.getItemAt(CBX_Genre.getSelectedIndex()).toString());
+            cstmS.executeUpdate();
+            ListChamps();
+        }catch(SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
+    }//GEN-LAST:event_BTN_AjoutActionPerformed
+
+    private void BTN_ModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ModActionPerformed
+        try{
+            CallableStatement cstmS = connBD.getConnection().prepareCall("{call GestionDisques.modifier(?,?,?,?,?,?,?)}");
+            cstmS.setInt(1, Integer.parseInt(LB_Numero.getText()));
+            cstmS.setString(2,TB_Titre.getText());
+            cstmS.setDouble(3, Double.parseDouble(TB_Prix.getText()));
+            cstmS.setInt(4, Integer.parseInt(TB_Annee.getText()));
+            cstmS.setString(5, TB_Langue.getText());
+            cstmS.setInt(6, (Integer)SP_NbChanson.getValue());
+            cstmS.setString(7, CBX_Genre.getItemAt(CBX_Genre.getSelectedIndex()).toString());
+            cstmS.executeUpdate();
+            ListChamps();
+        }catch(SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
+    }//GEN-LAST:event_BTN_ModActionPerformed
+
+    private void BTN_ViderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_ViderActionPerformed
+        TB_Annee.setText("");
+        TB_Langue.setText("");
+        TB_Prix.setText("");
+        TB_Titre.setText("");
+        SP_NbChanson.setValue(0);
+        CBX_Genre.setSelectedIndex(0);
+    }//GEN-LAST:event_BTN_ViderActionPerformed
+
+    private void BTN_RechercheTitreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_RechercheTitreActionPerformed
+        try{
+            PreparedStatement stm2 = connBD.getConnection().prepareStatement(sqlRecherche, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);            
+            stm2.setString(1, TB_RechercheTitre.getText()+"%");
+            rst = stm2.executeQuery();
+            if (rst.first())
+            {
+                Remplir();
+            }
+        }catch (SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
+    }//GEN-LAST:event_BTN_RechercheTitreActionPerformed
+
+    private void BTN_RechercheGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_RechercheGenreActionPerformed
+        ListeDisqueGenre fenetre = new ListeDisqueGenre(CBX_Genre1.getSelectedItem().toString(), connBD);
+        fenetre.setVisible(true);
+    }//GEN-LAST:event_BTN_RechercheGenreActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -383,6 +518,7 @@ ConnectionOracle connBD;
 ResultSet rst ;
 String sqlComboBox = "Select * From Genres";
 String sqlListe = " Select * From Disques";
+String sqlRecherche = "select * from Disques where Titre like ? ";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTN_Ajout;
     private javax.swing.JButton BTN_Back;

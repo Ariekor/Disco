@@ -253,6 +253,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ajouter"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_AjoutActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_Delete">
       <Properties>
@@ -263,12 +266,18 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Modifier"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_ModActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_Vider">
       <Properties>
         <Property name="text" type="java.lang.String" value="Vider les champs"/>
         <Property name="actionCommand" type="java.lang.String" value="Vider"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_ViderActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_First">
       <Properties>
@@ -284,12 +293,18 @@
         <Property name="text" type="java.lang.String" value="Pr&#xe9;c&#xe9;dent"/>
         <Property name="name" type="java.lang.String" value="Back" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_BackActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_Next">
       <Properties>
         <Property name="text" type="java.lang.String" value="Suivant"/>
         <Property name="name" type="java.lang.String" value="Next" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_NextActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTN_Last">
       <Properties>
@@ -304,6 +319,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Recherche"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_RechercheTitreActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="TB_RechercheTitre">
     </Component>
@@ -311,6 +329,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Chercher par genre"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTN_RechercheGenreActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="CBX_Genre1">
       <Properties>
