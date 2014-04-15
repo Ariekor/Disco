@@ -12,21 +12,17 @@ import oracle.jdbc.driver.OracleConnection;
 
 public class JFrameListeArtiste extends javax.swing.JFrame {
 
-    /**
-     * Creates new form JFrameListeArtiste
-     */
     public JFrameListeArtiste(ConnectionOracle conn, int numArt) {
         initComponents();
         this.connBD = conn;
         this.numArtiste = numArt;
     }
 
-    
+    //Remplir le JSCROLLPANE
     public void lister(){
     
-        Vector vectDisques = new Vector();
         Vector vectEntete = null;
-        JTable tabDisques = null;
+        
         try
         {
             PreparedStatement stm = connBD.getConnection().prepareStatement(sqlListe);
@@ -91,8 +87,20 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
     private void initComponents() {
 
         JSP_Artistes = new javax.swing.JScrollPane();
+        BTN_Supprimer = new javax.swing.JButton();
+        LB_NomArt = new javax.swing.JLabel();
 
+        setTitle("Disques par artistes");
         setResizable(false);
+
+        BTN_Supprimer.setText("Supprimer disque de l'artiste");
+        BTN_Supprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_SupprimerActionPerformed(evt);
+            }
+        });
+
+        LB_NomArt.setText("Artiste");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,17 +110,47 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(JSP_Artistes, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(LB_NomArt, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BTN_Supprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JSP_Artistes, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTN_Supprimer)
+                    .addComponent(LB_NomArt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JSP_Artistes, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTN_SupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SupprimerActionPerformed
+        String sqlDesaffecter = "delete from \"Artiste/Disque\" where numart = ? and numdisque = ?";
+        try
+        {
+            int ListPos = tabDisques.getSelectedRow();
+            Object descDique = (vectDisques.elementAt(ListPos));
+            String disque = descDique.toString().split(", ")[0].substring(1); //récupère le numdisque seulement
+            PreparedStatement pstA = connBD.getConnection().prepareStatement(sqlDesaffecter);
+            pstA.setInt(1, numArtiste);
+            pstA.setInt(2, Integer.parseInt(disque));   
+            pstA.executeUpdate();
+            
+            this.lister();
+        }
+        catch(SQLException se)
+        {
+            JOptionPane.showMessageDialog(this, se.getMessage());
+        }
+    }//GEN-LAST:event_BTN_SupprimerActionPerformed
 
     
     /**
@@ -152,9 +190,13 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
 
     int numArtiste = 0;
     ConnectionOracle connBD;
+    Vector vectDisques = new Vector();
+    JTable tabDisques = null;
     String sqlListe = "select * from disques where numdisque in " +
             "(select numdisque from \"Artiste/Disque\" where numart = ? )";
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTN_Supprimer;
     private javax.swing.JScrollPane JSP_Artistes;
+    private javax.swing.JLabel LB_NomArt;
     // End of variables declaration//GEN-END:variables
 }
