@@ -367,9 +367,12 @@ public class JFrameDisques extends javax.swing.JFrame {
             if (rst.first())
             {
                 Remplir();
+            }else
+            {
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se){ System.out.println(se);}
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
     }//GEN-LAST:event_BTN_FirstActionPerformed
 
     private void BTN_LastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_LastActionPerformed
@@ -378,9 +381,12 @@ public class JFrameDisques extends javax.swing.JFrame {
             if (rst.last())
             {
                 Remplir();
+            }else
+            {
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se){ System.out.println(se);}
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
     }//GEN-LAST:event_BTN_LastActionPerformed
 
     private void BTN_NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_NextActionPerformed
@@ -389,16 +395,12 @@ public class JFrameDisques extends javax.swing.JFrame {
             if(rst.next())
             {
                 Remplir();
-            }
-            else
+            }else
             {
-                JOptionPane.showMessageDialog(this, "suivant impossible");
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se)
-        {
-            JOptionPane.showMessageDialog(this, "Suivant imposible");
-        }
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
     }//GEN-LAST:event_BTN_NextActionPerformed
 
     private void BTN_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_BackActionPerformed
@@ -407,16 +409,12 @@ public class JFrameDisques extends javax.swing.JFrame {
             if(rst.previous())
             {
                 Remplir();
-            }
-            else
+            }else
             {
-                JOptionPane.showMessageDialog(this, "précédent impossible");
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se)
-        {
-            JOptionPane.showMessageDialog(this, "précédent imposible");
-        }
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
     }//GEN-LAST:event_BTN_BackActionPerformed
 
     private void BTN_AjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_AjoutActionPerformed
