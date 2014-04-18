@@ -18,6 +18,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
         
         this.connBD = conn;
         listerTBX();
+        AfficherDisques();
     }
 
     /**
@@ -50,7 +51,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
         TBX_Nom = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        BTN_Disques = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JSL_Disque = new javax.swing.JList();
         BTN_Affecter = new javax.swing.JButton();
@@ -58,6 +58,11 @@ public class JFrameArtistes extends javax.swing.JFrame {
         setTitle("Artistes");
         setLocationByPlatform(true);
         setResizable(false);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         BTN_Vider.setText("Vider les zones");
         BTN_Vider.addActionListener(new java.awt.event.ActionListener() {
@@ -158,13 +163,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
 
         jLabel8.setText("(affiche les diques de l'artiste sélectionné)");
 
-        BTN_Disques.setText("Afficher tous les disques");
-        BTN_Disques.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTN_DisquesActionPerformed(evt);
-            }
-        });
-
         JSL_Disque.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -186,58 +184,52 @@ public class JFrameArtistes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BTN_Rechercher)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTN_Precedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BTN_Lister)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BTN_Disques)
-                        .addGap(35, 35, 35))
+                        .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(BTN_Rechercher)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(TBX_Nation, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel5))
+                                        .addGap(28, 28, 28)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(LB_Num, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(TBX_Prenom, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(TBX_Nom, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(67, 67, 67)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(BTN_Supprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                        .addComponent(BTN_Modif, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                        .addComponent(BTN_Ajout, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(BTN_Vider)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(BTN_Lister)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(BTN_Affecter))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel6)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(TBX_Nation, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel2)
-                                                .addComponent(jLabel4)
-                                                .addComponent(jLabel5))
-                                            .addGap(28, 28, 28)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(LB_Num, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(TBX_Prenom, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(TBX_Nom, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGap(67, 67, 67)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(BTN_Supprimer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(BTN_Modif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(BTN_Ajout, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(BTN_Vider))
-                                    .addGap(52, 52, 52)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                                .addComponent(BTN_Precedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(BTN_Affecter, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap(313, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,24 +260,24 @@ public class JFrameArtistes extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTN_Precedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Disques, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTN_Affecter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BTN_Precedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTN_Lister, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(BTN_Affecter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(BTN_Rechercher)
                         .addComponent(TBX_Recherche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -301,10 +293,13 @@ public class JFrameArtistes extends javax.swing.JFrame {
             if(rst.last())
             {
                 remplir();
+            }else
+            {
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se){
-            JOptionPane.showMessageDialog(this, "dernier imposible");        }
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
+
     }//GEN-LAST:event_BTN_DernierActionPerformed
 
     private void BTN_SupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SupprimerActionPerformed
@@ -337,8 +332,12 @@ public class JFrameArtistes extends javax.swing.JFrame {
             {
                 remplir();
             }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
+            }
         }
-        catch(SQLException se){ System.out.println(se);}
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
         
     }//GEN-LAST:event_BTN_PremierActionPerformed
 
@@ -388,13 +387,14 @@ public class JFrameArtistes extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Précédent impossible");
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
         catch(SQLException se)
         {
-            JOptionPane.showMessageDialog(this, "précedent impossible");
+            JOptionPane.showMessageDialog(this, se.getMessage());
         }
+         AfficherDisques();
     }//GEN-LAST:event_BTN_PrecedentActionPerformed
 
     private void BTN_SuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SuivantActionPerformed
@@ -407,13 +407,14 @@ public class JFrameArtistes extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "suivant impossible");
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
         catch(SQLException se)
         {
-            JOptionPane.showMessageDialog(this, "Suivant imposible");
+            JOptionPane.showMessageDialog(this, se.getMessage());
         }
+         AfficherDisques();
     }//GEN-LAST:event_BTN_SuivantActionPerformed
 
     private void BTN_RechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_RechercherActionPerformed
@@ -423,17 +424,15 @@ public class JFrameArtistes extends javax.swing.JFrame {
             rst = stm2.executeQuery();
             if (rst.first())
             {
-                remplir();
+                remplir();                
             }
         }catch (SQLException sqe){
             JOptionPane.showMessageDialog(this, sqe.getMessage());
         }
     }//GEN-LAST:event_BTN_RechercherActionPerformed
 
-    private void BTN_DisquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DisquesActionPerformed
-        
-        AfficherDisques();
-    }//GEN-LAST:event_BTN_DisquesActionPerformed
+
+    //rempli la liste des disquesquine sont PAS encore affectés à l'artiste
 
     private void AfficherDisques()
     {
@@ -466,8 +465,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
             PreparedStatement pstA = connBD.getConnection().prepareStatement(sqlAffecter);
             pstA.setInt(1, Integer.parseInt(LB_Num.getText()));
             pstA.setInt(2, Integer.parseInt(numD));   
-            pstA.executeUpdate();
-            
+            pstA.executeUpdate();            
             AfficherDisques();    
         }
         catch(SQLException se)
@@ -475,6 +473,10 @@ public class JFrameArtistes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, se.getMessage());
         }    
     }//GEN-LAST:event_BTN_AffecterActionPerformed
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        AfficherDisques();
+    }//GEN-LAST:event_formFocusGained
  
     private void remplir(){
         try{
@@ -482,6 +484,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
             TBX_Nom.setText(rst.getString("nom"));
             TBX_Prenom.setText(rst.getString("prenom"));
             TBX_Nation.setText (rst.getString("nationalite"));
+            AfficherDisques();
         }
         catch(SQLException se){ System.out.println(se);}
     }
@@ -534,7 +537,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
     private javax.swing.JButton BTN_Affecter;
     private javax.swing.JButton BTN_Ajout;
     private javax.swing.JButton BTN_Dernier;
-    private javax.swing.JButton BTN_Disques;
     private javax.swing.JButton BTN_Lister;
     private javax.swing.JButton BTN_Modif;
     private javax.swing.JButton BTN_Precedent;
