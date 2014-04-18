@@ -42,6 +42,7 @@
                       <Component id="BTN_Lister" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="BTN_Dernier" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace min="35" pref="293" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -69,8 +70,10 @@
                               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+
                                       <Component id="BTN_Supprimer" alignment="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="BTN_Modif" alignment="0" pref="0" max="32767" attributes="0"/>
+
                                       <Component id="BTN_Ajout" alignment="0" min="-2" pref="81" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="BTN_Vider" min="-2" max="-2" attributes="0"/>
@@ -82,16 +85,19 @@
                               <Component id="BTN_Precedent" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="BTN_Suivant" min="-2" max="-2" attributes="0"/>
+
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+
                           <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                           <Component id="BTN_Affecter" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace pref="313" max="32767" attributes="0"/>
+
           </Group>
       </Group>
     </DimensionLayout>
@@ -131,6 +137,7 @@
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="BTN_Affecter" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -139,6 +146,7 @@
                       <Component id="BTN_Premier" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="BTN_Suivant" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
