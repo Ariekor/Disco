@@ -58,9 +58,11 @@ public class JFrameArtistes extends javax.swing.JFrame {
         setTitle("Artistes");
         setLocationByPlatform(true);
         setResizable(false);
-        addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                formFocusGained(evt);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
             }
         });
 
@@ -481,9 +483,9 @@ public class JFrameArtistes extends javax.swing.JFrame {
         }    
     }//GEN-LAST:event_BTN_AffecterActionPerformed
 
-    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
-        remplir();        
-    }//GEN-LAST:event_formFocusGained
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        remplir(); 
+    }//GEN-LAST:event_formWindowGainedFocus
  
     private void remplir(){
         try{
