@@ -124,6 +124,11 @@ public class JFrameDisques extends javax.swing.JFrame {
         CBX_Genre1 = new javax.swing.JComboBox();
 
         setTitle("Disques");
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         jLabel1.setText("Numero");
 
@@ -166,6 +171,11 @@ public class JFrameDisques extends javax.swing.JFrame {
         });
 
         BTN_Delete.setText("Supprimer");
+        BTN_Delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_DeleteActionPerformed(evt);
+            }
+        });
 
         BTN_Mod.setText("Modifier");
         BTN_Mod.addActionListener(new java.awt.event.ActionListener() {
@@ -477,6 +487,21 @@ public class JFrameDisques extends javax.swing.JFrame {
         ListeDisqueGenre fenetre = new ListeDisqueGenre(CBX_Genre1.getSelectedItem().toString(), connBD);
         fenetre.setVisible(true);
     }//GEN-LAST:event_BTN_RechercheGenreActionPerformed
+
+    private void BTN_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DeleteActionPerformed
+        try{
+            CallableStatement cstmS = connBD.getConnection().prepareCall("{call GestionDisques.supprimer(?)}");
+            cstmS.setInt(1, Integer.parseInt(LB_Numero.getText()));            
+            cstmS.executeUpdate();
+            ListChamps();
+        }catch(SQLException sqe){
+            JOptionPane.showMessageDialog(this, sqe.getMessage());
+        }
+    }//GEN-LAST:event_BTN_DeleteActionPerformed
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        Remplir();
+    }//GEN-LAST:event_formFocusGained
 
     /**
      * @param args the command line arguments

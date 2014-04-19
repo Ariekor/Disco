@@ -92,6 +92,11 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
 
         setTitle("Disques par artistes");
         setResizable(false);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         BTN_Supprimer.setText("Supprimer disque de l'artiste");
         BTN_Supprimer.addActionListener(new java.awt.event.ActionListener() {
@@ -151,6 +156,10 @@ public class JFrameListeArtiste extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, se.getMessage());
         }
     }//GEN-LAST:event_BTN_SupprimerActionPerformed
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        this.lister();
+    }//GEN-LAST:event_formFocusGained
 
     
     /**

@@ -42,6 +42,11 @@ public class ListeDisqueGenre extends javax.swing.JFrame {
         JSP_Liste = new javax.swing.JScrollPane();
 
         setTitle("Liste Disque par Genre");
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,6 +67,10 @@ public class ListeDisqueGenre extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        this.lister();
+    }//GEN-LAST:event_formFocusGained
 
     /**
      * @param args the command line arguments

@@ -58,6 +58,11 @@ public class JFrameArtistes extends javax.swing.JFrame {
         setTitle("Artistes");
         setLocationByPlatform(true);
         setResizable(false);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                formFocusGained(evt);
+            }
+        });
 
         BTN_Vider.setText("Vider les zones");
         BTN_Vider.addActionListener(new java.awt.event.ActionListener() {
@@ -268,12 +273,13 @@ public class JFrameArtistes extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTN_Precedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Disques, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTN_Disques, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BTN_Precedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTN_Lister, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,10 +307,12 @@ public class JFrameArtistes extends javax.swing.JFrame {
             if(rst.last())
             {
                 remplir();
+            }else
+            {
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se){
-            JOptionPane.showMessageDialog(this, "dernier imposible");        }
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
     }//GEN-LAST:event_BTN_DernierActionPerformed
 
     private void BTN_SupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SupprimerActionPerformed
@@ -336,9 +344,12 @@ public class JFrameArtistes extends javax.swing.JFrame {
             if (rst.first())
             {
                 remplir();
+            }else
+            {
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se){ System.out.println(se);}
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
         
     }//GEN-LAST:event_BTN_PremierActionPerformed
 
@@ -388,13 +399,10 @@ public class JFrameArtistes extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Précédent impossible");
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se)
-        {
-            JOptionPane.showMessageDialog(this, "précedent impossible");
-        }
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
     }//GEN-LAST:event_BTN_PrecedentActionPerformed
 
     private void BTN_SuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SuivantActionPerformed
@@ -407,13 +415,10 @@ public class JFrameArtistes extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "suivant impossible");
+                JOptionPane.showMessageDialog(this, "Fin de la liste");
             }
         }
-        catch(SQLException se)
-        {
-            JOptionPane.showMessageDialog(this, "Suivant imposible");
-        }
+        catch(SQLException se){ JOptionPane.showMessageDialog(this, se.getMessage());}
     }//GEN-LAST:event_BTN_SuivantActionPerformed
 
     private void BTN_RechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_RechercherActionPerformed
@@ -475,6 +480,10 @@ public class JFrameArtistes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, se.getMessage());
         }    
     }//GEN-LAST:event_BTN_AffecterActionPerformed
+
+    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
+        remplir();        
+    }//GEN-LAST:event_formFocusGained
  
     private void remplir(){
         try{
@@ -482,6 +491,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
             TBX_Nom.setText(rst.getString("nom"));
             TBX_Prenom.setText(rst.getString("prenom"));
             TBX_Nation.setText (rst.getString("nationalite"));
+            AfficherDisques();
         }
         catch(SQLException se){ System.out.println(se);}
     }
