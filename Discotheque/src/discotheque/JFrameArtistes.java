@@ -18,7 +18,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
         
         this.connBD = conn;
         listerTBX();
-        AfficherDisques();
     }
 
     /**
@@ -51,6 +50,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
         TBX_Nom = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        BTN_Disques = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JSL_Disque = new javax.swing.JList();
         BTN_Affecter = new javax.swing.JButton();
@@ -58,11 +58,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
         setTitle("Artistes");
         setLocationByPlatform(true);
         setResizable(false);
-        addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                formFocusGained(evt);
-            }
-        });
 
         BTN_Vider.setText("Vider les zones");
         BTN_Vider.addActionListener(new java.awt.event.ActionListener() {
@@ -163,6 +158,13 @@ public class JFrameArtistes extends javax.swing.JFrame {
 
         jLabel8.setText("(affiche les diques de l'artiste sélectionné)");
 
+        BTN_Disques.setText("Afficher tous les disques");
+        BTN_Disques.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTN_DisquesActionPerformed(evt);
+            }
+        });
+
         JSL_Disque.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -192,7 +194,9 @@ public class JFrameArtistes extends javax.swing.JFrame {
                         .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 293, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BTN_Disques)
+                        .addGap(35, 35, 35))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -268,7 +272,8 @@ public class JFrameArtistes extends javax.swing.JFrame {
                     .addComponent(BTN_Precedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_Dernier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_Premier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BTN_Suivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_Disques, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTN_Lister, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,7 +305,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
         }
         catch(SQLException se){
             JOptionPane.showMessageDialog(this, "dernier imposible");        }
-         AfficherDisques();
     }//GEN-LAST:event_BTN_DernierActionPerformed
 
     private void BTN_SupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SupprimerActionPerformed
@@ -335,7 +339,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
             }
         }
         catch(SQLException se){ System.out.println(se);}
-         AfficherDisques();
         
     }//GEN-LAST:event_BTN_PremierActionPerformed
 
@@ -392,7 +395,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this, "précedent impossible");
         }
-         AfficherDisques();
     }//GEN-LAST:event_BTN_PrecedentActionPerformed
 
     private void BTN_SuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SuivantActionPerformed
@@ -412,7 +414,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this, "Suivant imposible");
         }
-         AfficherDisques();
     }//GEN-LAST:event_BTN_SuivantActionPerformed
 
     private void BTN_RechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_RechercherActionPerformed
@@ -428,6 +429,11 @@ public class JFrameArtistes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, sqe.getMessage());
         }
     }//GEN-LAST:event_BTN_RechercherActionPerformed
+
+    private void BTN_DisquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_DisquesActionPerformed
+        
+        AfficherDisques();
+    }//GEN-LAST:event_BTN_DisquesActionPerformed
 
     private void AfficherDisques()
     {
@@ -469,10 +475,6 @@ public class JFrameArtistes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, se.getMessage());
         }    
     }//GEN-LAST:event_BTN_AffecterActionPerformed
-
-    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
-        AfficherDisques();
-    }//GEN-LAST:event_formFocusGained
  
     private void remplir(){
         try{
@@ -532,6 +534,7 @@ public class JFrameArtistes extends javax.swing.JFrame {
     private javax.swing.JButton BTN_Affecter;
     private javax.swing.JButton BTN_Ajout;
     private javax.swing.JButton BTN_Dernier;
+    private javax.swing.JButton BTN_Disques;
     private javax.swing.JButton BTN_Lister;
     private javax.swing.JButton BTN_Modif;
     private javax.swing.JButton BTN_Precedent;
